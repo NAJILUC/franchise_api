@@ -10,6 +10,8 @@ import com.nequi.franchise.franchise.responses.franchises.StoreResponse;
 import com.nequi.franchise.franchise.responses.utils.BasicIdNameResponse;
 import com.nequi.franchise.franchise.services.utils.UtilService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,12 +24,13 @@ public class FranchiseService {
     private final StoreService storeService;
 
     @Transactional
-    public BasicIdNameResponse createFranchise(FranchiseRequest franchiseRequest){
+    public ResponseEntity<BasicIdNameResponse> createFranchise(FranchiseRequest franchiseRequest) {
         Franchise franchise = new Franchise();
         this.validUniqueName(franchiseRequest.getName());
         franchise.setName(franchiseRequest.getName());
         franchiseRepository.save(franchise);
-        return new BasicIdNameResponse(franchise);
+        BasicIdNameResponse response = new BasicIdNameResponse(franchise);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     private void validUniqueName(String name) {
@@ -36,8 +39,9 @@ public class FranchiseService {
         }
     }
 
-    public StoreResponse createStore(Long franchiseId, StoreRequest storeRequest) {
+    public ResponseEntity<StoreResponse> createStore(Long franchiseId, StoreRequest storeRequest) {
         Franchise franchise = UtilService.checkOptionalEmpty(franchiseRepository.findById(franchiseId), ExceptionEnum.FRAN02);
-        return storeService.createStore(franchise, storeRequest);
+        StoreResponse response = storeService.createStore(franchise, storeRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

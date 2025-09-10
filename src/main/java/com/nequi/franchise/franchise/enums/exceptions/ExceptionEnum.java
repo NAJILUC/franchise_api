@@ -14,6 +14,7 @@ public enum ExceptionEnum {
     STOR02("Store was not found", ExceptionTypeEnum.NOT_FOUND_EXCEPTION.getValue()),
 
     PROD01("Product name must be unique for store", ExceptionTypeEnum.REQUEST_EXCEPTION.getValue()),
+    PROD02("Product by id and store was not found", ExceptionTypeEnum.NOT_FOUND_EXCEPTION.getValue()),
     ;
 
     private final String code;

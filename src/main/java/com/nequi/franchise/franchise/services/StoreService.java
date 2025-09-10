@@ -11,6 +11,8 @@ import com.nequi.franchise.franchise.responses.franchises.ProductResponse;
 import com.nequi.franchise.franchise.responses.franchises.StoreResponse;
 import com.nequi.franchise.franchise.services.utils.UtilService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,10 @@ public class StoreService {
     private final StoreRepository storeRepository;
 
     private final ProductService productService;
+
+    private Store findByStoreId(Long storeId){
+        return UtilService.checkOptionalEmpty(storeRepository.findById(storeId), ExceptionEnum.STOR02);
+    }
 
     @Transactional
     public StoreResponse createStore(Franchise franchise, StoreRequest storeRequest) {
@@ -38,8 +44,15 @@ public class StoreService {
         }
     }
 
-    public ProductResponse createProduct(Long storeId, ProductRequest productRequest) {
-        Store store = UtilService.checkOptionalEmpty(storeRepository.findById(storeId), ExceptionEnum.STOR02);
-        return productService.createProduct(store, productRequest);
+    public ResponseEntity<ProductResponse> createProduct(Long storeId, ProductRequest productRequest) {
+        Store store = this.findByStoreId(storeId);
+        ProductResponse response =productService.createProduct(store, productRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    public ResponseEntity<Void> deleteProduct(Long storeId, Long productId) {
+        Store store = this.findByStoreId(storeId);
+        productService.deleteProduct(store, productId);
+        return ResponseEntity.noContent().build();
     }
 }
