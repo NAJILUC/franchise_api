@@ -38,6 +38,6 @@ public class FranchiseService {
 
     public StoreResponse createStore(Long franchiseId, StoreRequest storeRequest) {
         Franchise franchise = UtilService.checkOptionalEmpty(franchiseRepository.findById(franchiseId), ExceptionEnum.FRAN02);
-        return storeService.createFranchise(franchise, storeRequest);
+        return storeService.createStore(franchise, storeRequest);
     }
 }

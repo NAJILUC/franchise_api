@@ -1,14 +1,24 @@
 package com.nequi.franchise.franchise.controllers;
 
+import com.nequi.franchise.franchise.requests.ProductRequest;
+import com.nequi.franchise.franchise.responses.franchises.ProductResponse;
 import com.nequi.franchise.franchise.services.StoreService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/stores")
 @RequiredArgsConstructor
 public class StoreController {
 
     private final StoreService storeService;
+
+    @PostMapping(path = "/{storeId}/product", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ProductResponse> createStore(@PathVariable Long storeId, @Valid @RequestBody ProductRequest productRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(storeService.createProduct(storeId, productRequest));
+    }
 }

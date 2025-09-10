@@ -28,7 +28,7 @@ public class FranchiseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(franchiseService.createFranchise(franchiseRequest));
     }
 
-    @PostMapping(path = "/{franchiseId}/stores", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(path = "/{franchiseId}/store", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<StoreResponse> createStore(@PathVariable Long franchiseId, @Valid @RequestBody StoreRequest storeRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(franchiseService.createStore(franchiseId, storeRequest));
     }
