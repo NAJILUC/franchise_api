@@ -7,9 +7,15 @@ import lombok.Getter;
 @Getter
 public enum ExceptionEnum {
 
-    USR10("User manager is not found", ExceptionTypeEnum.REQUEST_EXCEPTION.getValue());
-
+    FRANCHISE01("Franchise name must be unique", ExceptionTypeEnum.REQUEST_EXCEPTION.getValue());
 
     private final String code;
     private final String message;
+    private final String description;
+
+    ExceptionEnum(String message, String description) {
+        this.code = this.name();
+        this.message = message;
+        this.description = description;
+    }
 }

@@ -5,7 +5,6 @@ import com.nequi.franchise.franchise.enums.exceptions.ExceptionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Collections;
 
 @Data
@@ -17,8 +16,8 @@ public class BasicErrorResponse {
 
     public BasicErrorResponse(ExceptionEnum exceptionEnum) {
         this.errors = new BasicErrorDetailResponse(
-                exceptionEnum.getCode(),
-                Collections.singletonList(exceptionEnum.getMessage())
+                exceptionEnum.getCode(), exceptionEnum.getMessage(),
+                Collections.singletonList(exceptionEnum.getDescription())
         );
     }
 

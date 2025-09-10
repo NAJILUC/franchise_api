@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 public enum ExceptionTypeEnum {
 
-    INTERNAL_EXCEPTION("IE", "Internal Server"),
-    REQUEST_EXCEPTION("RE", "Request"),
-    VALIDATION_EXCEPTION("VE", "Validation"),
-    NOT_FOUND_EXCEPTION("NF", "NotFound");
+    INTERNAL_EXCEPTION("IE", "Internal Server Exception"),
+    REQUEST_EXCEPTION("RE", "Request Exception"),
+    VALIDATION_EXCEPTION("VE", "Validation Exception"),
+    NOT_FOUND_EXCEPTION("NF", "NotFound Exception");
 
     private final String code;
     private final String value;

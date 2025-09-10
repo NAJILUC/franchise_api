@@ -39,6 +39,7 @@ public class GlobalExceptions {
     public ResponseEntity<BasicErrorResponse> handleException(IllegalArgumentException e) {
         BasicErrorResponse errorResponse = new BasicErrorResponse();
         errorResponse.setErrors(new BasicErrorDetailResponse(ExceptionTypeEnum.VALIDATION_EXCEPTION.getCode(),
+                ExceptionTypeEnum.VALIDATION_EXCEPTION.getValue(),
                 Collections.singletonList(e.getMessage())));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
@@ -50,6 +51,7 @@ public class GlobalExceptions {
 
         for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
             errorResponse.setErrors(new BasicErrorDetailResponse(ExceptionTypeEnum.VALIDATION_EXCEPTION.getCode(),
+                    ExceptionTypeEnum.VALIDATION_EXCEPTION.getValue(),
                     Collections.singletonList(fieldError.getDefaultMessage())));
         }
 

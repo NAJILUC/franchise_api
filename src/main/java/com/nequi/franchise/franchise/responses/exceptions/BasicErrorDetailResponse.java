@@ -13,7 +13,13 @@ import java.util.List;
 public class BasicErrorDetailResponse {
 
     private String code;
+    private String description;
     private List<String> fields;
+
+    public BasicErrorDetailResponse(String code, String description) {
+        this.code = code;
+        this.description = description;
+    }
 
 
 }
