@@ -5,7 +5,10 @@ import com.nequi.franchise.franchise.enums.exceptions.ExceptionEnum;
 import com.nequi.franchise.franchise.exceptions.BadRequestException;
 import com.nequi.franchise.franchise.repositories.FranchiseRepository;
 import com.nequi.franchise.franchise.requests.FranchiseRequest;
+import com.nequi.franchise.franchise.requests.StoreRequest;
+import com.nequi.franchise.franchise.responses.franchises.StoreResponse;
 import com.nequi.franchise.franchise.responses.utils.BasicIdNameResponse;
+import com.nequi.franchise.franchise.services.utils.UtilService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class FranchiseService {
 
     private final FranchiseRepository franchiseRepository;
+
+    private final StoreService storeService;
 
     @Transactional
     public BasicIdNameResponse createFranchise(FranchiseRequest franchiseRequest){
@@ -27,7 +32,12 @@ public class FranchiseService {
 
     private void validUniqueName(String name) {
         if (franchiseRepository.existsByName(name)) {
-            throw new BadRequestException(ExceptionEnum.FRANCHISE01);
+            throw new BadRequestException(ExceptionEnum.FRAN01);
         }
+    }
+
+    public StoreResponse createStore(Long franchiseId, StoreRequest storeRequest) {
+        Franchise franchise = UtilService.checkOptionalEmpty(franchiseRepository.findById(franchiseId), ExceptionEnum.FRAN02);
+        return storeService.createFranchise(franchise, storeRequest);
     }
 }
