@@ -13,11 +13,13 @@ public class ProductResponse {
 
     private Long id;
     private String name;
+    private Long stock;
     private StoreResponse store;
 
     public ProductResponse(Product product) {
         this.id = product.getId();
         this.name = product.getName();
+        this.stock = product.getStock();
         this.store = new StoreResponse(product.getStore());
     }
 
