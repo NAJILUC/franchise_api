@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ExceptionEnum {
 
     FRAN01("Franchise name must be unique", ExceptionTypeEnum.REQUEST_EXCEPTION.getValue()),
-    FRAN02("Franchise was not found", ExceptionTypeEnum.REQUEST_EXCEPTION.getValue()),
+    FRAN02("Franchise was not found", ExceptionTypeEnum.NOT_FOUND_EXCEPTION.getValue()),
 
     STOR01("Store name must be unique", ExceptionTypeEnum.REQUEST_EXCEPTION.getValue());
 
