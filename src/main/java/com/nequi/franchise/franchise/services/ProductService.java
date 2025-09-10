@@ -5,12 +5,16 @@ import com.nequi.franchise.franchise.entities.Store;
 import com.nequi.franchise.franchise.enums.exceptions.ExceptionEnum;
 import com.nequi.franchise.franchise.exceptions.BadRequestException;
 import com.nequi.franchise.franchise.exceptions.NotFoundException;
+import com.nequi.franchise.franchise.objects.utils.PaginationObj;
 import com.nequi.franchise.franchise.repositories.ProductRepository;
 import com.nequi.franchise.franchise.requests.ProductRequest;
 import com.nequi.franchise.franchise.requests.UpdProductRequest;
 import com.nequi.franchise.franchise.responses.franchises.ProductResponse;
+import com.nequi.franchise.franchise.responses.franchises.TopProductStockResponse;
 import com.nequi.franchise.franchise.services.utils.UtilService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -61,6 +65,13 @@ public class ProductService {
         }
         productRepository.save(product);
         ProductResponse response = new ProductResponse(product);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    public ResponseEntity<Page<TopProductStockResponse>> findTopProductStock(Long franchiseId, PaginationObj paginationObj) {
+        Pageable pageable = UtilService.buildPageable(paginationObj);
+        Page<TopProductStockResponse> response = productRepository.topProductStock(franchiseId, pageable)
+                .map(TopProductStockResponse::new);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

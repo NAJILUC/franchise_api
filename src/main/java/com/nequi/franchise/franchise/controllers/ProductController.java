@@ -1,14 +1,16 @@
 package com.nequi.franchise.franchise.controllers;
 
-import com.nequi.franchise.franchise.requests.ProductRequest;
 import com.nequi.franchise.franchise.requests.UpdProductRequest;
 import com.nequi.franchise.franchise.responses.franchises.ProductResponse;
+import com.nequi.franchise.franchise.responses.franchises.TopProductStockResponse;
 import com.nequi.franchise.franchise.services.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/products")
