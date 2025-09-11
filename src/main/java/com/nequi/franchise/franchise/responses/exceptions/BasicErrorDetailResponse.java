@@ -14,7 +14,7 @@ public class BasicErrorDetailResponse {
 
     private String code;
     private String description;
-    private List<String> fields;
+    private List<String> errors;
 
     public BasicErrorDetailResponse(String code, String description) {
         this.code = code;

@@ -1,4 +1,4 @@
-package com.nequi.franchise.franchise.requests;
+package com.nequi.franchise.franchise.requests.stores;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

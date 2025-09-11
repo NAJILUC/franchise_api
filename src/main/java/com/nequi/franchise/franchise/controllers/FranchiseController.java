@@ -1,8 +1,9 @@
 package com.nequi.franchise.franchise.controllers;
 
 import com.nequi.franchise.franchise.objects.utils.PaginationObj;
-import com.nequi.franchise.franchise.requests.FranchiseRequest;
-import com.nequi.franchise.franchise.requests.StoreRequest;
+import com.nequi.franchise.franchise.requests.franchises.FranchiseRequest;
+import com.nequi.franchise.franchise.requests.franchises.UpdFranchiseRequest;
+import com.nequi.franchise.franchise.requests.stores.StoreRequest;
 import com.nequi.franchise.franchise.responses.franchises.StoreResponse;
 import com.nequi.franchise.franchise.responses.franchises.TopProductStockResponse;
 import com.nequi.franchise.franchise.responses.utils.BasicIdNameResponse;
@@ -13,8 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/franchises")
@@ -40,5 +39,10 @@ public class FranchiseController {
     @PostMapping(path = "/{franchiseId}/store", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<StoreResponse> createStore(@PathVariable Long franchiseId, @Valid @RequestBody StoreRequest storeRequest) {
         return franchiseService.createStore(franchiseId, storeRequest);
+    }
+
+    @PutMapping(path = "/{franchiseId}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<BasicIdNameResponse> updateFranchise(@PathVariable Long franchiseId, @Valid @RequestBody UpdFranchiseRequest updFranchiseRequest) {
+        return franchiseService.updateFranchise(franchiseId, updFranchiseRequest);
     }
 }

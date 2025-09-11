@@ -1,13 +1,13 @@
 package com.nequi.franchise.franchise.services;
 
 import com.nequi.franchise.franchise.entities.Franchise;
-import com.nequi.franchise.franchise.entities.Store;
 import com.nequi.franchise.franchise.enums.exceptions.ExceptionEnum;
 import com.nequi.franchise.franchise.exceptions.BadRequestException;
 import com.nequi.franchise.franchise.objects.utils.PaginationObj;
 import com.nequi.franchise.franchise.repositories.FranchiseRepository;
-import com.nequi.franchise.franchise.requests.FranchiseRequest;
-import com.nequi.franchise.franchise.requests.StoreRequest;
+import com.nequi.franchise.franchise.requests.franchises.FranchiseRequest;
+import com.nequi.franchise.franchise.requests.franchises.UpdFranchiseRequest;
+import com.nequi.franchise.franchise.requests.stores.StoreRequest;
 import com.nequi.franchise.franchise.responses.franchises.StoreResponse;
 import com.nequi.franchise.franchise.responses.franchises.TopProductStockResponse;
 import com.nequi.franchise.franchise.responses.utils.BasicIdNameResponse;
@@ -18,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,15 +35,15 @@ public class FranchiseService {
     @Transactional
     public ResponseEntity<BasicIdNameResponse> createFranchise(FranchiseRequest franchiseRequest) {
         Franchise franchise = new Franchise();
-        this.validUniqueName(franchiseRequest.getName());
+        this.validUniqueName(franchiseRequest.getName(), null);
         franchise.setName(franchiseRequest.getName());
         franchiseRepository.save(franchise);
         BasicIdNameResponse response = new BasicIdNameResponse(franchise);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    private void validUniqueName(String name) {
-        if (franchiseRepository.existsByName(name)) {
+    private void validUniqueName(String name, Long franchiseId) {
+        if (franchiseRepository.existsByNameAndIdNot(name, franchiseId)) {
             throw new BadRequestException(ExceptionEnum.FRAN01);
         }
     }
@@ -59,5 +57,17 @@ public class FranchiseService {
     public ResponseEntity<Page<TopProductStockResponse>> findTopProductStock(Long franchiseId, PaginationObj paginationObj) {
         this.findByFranchiseId(franchiseId);
         return productService.findTopProductStock(franchiseId, paginationObj);
+    }
+
+    @Transactional
+    public ResponseEntity<BasicIdNameResponse> updateFranchise(Long franchiseId, UpdFranchiseRequest updFranchiseRequest) {
+        Franchise franchise = this.findByFranchiseId(franchiseId);
+        this.validUniqueName(updFranchiseRequest.getName(), franchise.getId());
+        if(!franchise.getName().equals(updFranchiseRequest.getName())){
+            franchise.setName(updFranchiseRequest.getName());
+        }
+        franchiseRepository.save(franchise);
+        BasicIdNameResponse response = new BasicIdNameResponse(franchise);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

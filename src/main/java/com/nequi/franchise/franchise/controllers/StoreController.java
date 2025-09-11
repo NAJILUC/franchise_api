@@ -1,6 +1,6 @@
 package com.nequi.franchise.franchise.controllers;
 
-import com.nequi.franchise.franchise.requests.ProductRequest;
+import com.nequi.franchise.franchise.requests.products.ProductRequest;
 import com.nequi.franchise.franchise.responses.franchises.ProductResponse;
 import com.nequi.franchise.franchise.services.StoreService;
 import jakarta.validation.Valid;
