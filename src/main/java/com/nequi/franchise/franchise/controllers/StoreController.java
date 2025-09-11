@@ -1,11 +1,9 @@
 package com.nequi.franchise.franchise.controllers;
 
-import com.nequi.franchise.franchise.requests.franchises.UpdFranchiseRequest;
 import com.nequi.franchise.franchise.requests.products.ProductRequest;
 import com.nequi.franchise.franchise.requests.stores.UpdStoreRequest;
 import com.nequi.franchise.franchise.responses.franchises.ProductResponse;
 import com.nequi.franchise.franchise.responses.franchises.StoreResponse;
-import com.nequi.franchise.franchise.responses.utils.BasicIdNameResponse;
 import com.nequi.franchise.franchise.services.StoreService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

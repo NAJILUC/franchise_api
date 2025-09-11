@@ -5,13 +5,11 @@ import com.nequi.franchise.franchise.entities.Store;
 import com.nequi.franchise.franchise.enums.exceptions.ExceptionEnum;
 import com.nequi.franchise.franchise.exceptions.BadRequestException;
 import com.nequi.franchise.franchise.repositories.StoreRepository;
-import com.nequi.franchise.franchise.requests.franchises.UpdFranchiseRequest;
 import com.nequi.franchise.franchise.requests.products.ProductRequest;
 import com.nequi.franchise.franchise.requests.stores.StoreRequest;
 import com.nequi.franchise.franchise.requests.stores.UpdStoreRequest;
 import com.nequi.franchise.franchise.responses.franchises.ProductResponse;
 import com.nequi.franchise.franchise.responses.franchises.StoreResponse;
-import com.nequi.franchise.franchise.responses.utils.BasicIdNameResponse;
 import com.nequi.franchise.franchise.services.utils.UtilService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,15 +32,15 @@ public class StoreService {
     @Transactional
     public StoreResponse createStore(Franchise franchise, StoreRequest storeRequest) {
         Store store = new Store();
-        this.validUniqueName(storeRequest.getName(), null);
+        this.validUniqueName(franchise, storeRequest.getName(), null);
         store.setFranchise(franchise);
         store.setName(storeRequest.getName());
         storeRepository.save(store);
         return new StoreResponse(store);
     }
 
-    private void validUniqueName(String name, Long storeId) {
-        if (storeRepository.existsByNameAndIdNot(name, storeId)) {
+    private void validUniqueName(Franchise franchise, String name, Long storeId) {
+        if (storeRepository.existsByFranchiseAndNameAndIdNot(franchise, name, storeId)) {
             throw new BadRequestException(ExceptionEnum.STOR01);
         }
     }
@@ -62,7 +60,7 @@ public class StoreService {
     @Transactional
     public ResponseEntity<StoreResponse> updateStore(Long storeId, UpdStoreRequest updStoreRequest) {
         Store store = this.findByStoreId(storeId);
-        this.validUniqueName(updStoreRequest.getName(), store.getId());
+        this.validUniqueName(store.getFranchise(), updStoreRequest.getName(), store.getId());
         if(!store.getName().equals(updStoreRequest.getName())){
             store.setName(updStoreRequest.getName());
         }
