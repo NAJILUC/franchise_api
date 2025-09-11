@@ -1,4 +1,4 @@
-package com.nequi.franchise.franchise.entities;
+package com.nequi.franchise.franchise.entities.franchises;
 
 import jakarta.persistence.*;
 import lombok.Data;

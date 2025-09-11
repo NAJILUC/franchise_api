@@ -1,5 +1,6 @@
-package com.nequi.franchise.franchise.entities;
+package com.nequi.franchise.franchise.entities.products;
 
+import com.nequi.franchise.franchise.entities.stores.Store;
 import jakarta.persistence.*;
 import lombok.Data;
 

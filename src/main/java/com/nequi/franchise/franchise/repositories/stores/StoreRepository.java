@@ -1,7 +1,7 @@
-package com.nequi.franchise.franchise.repositories;
+package com.nequi.franchise.franchise.repositories.stores;
 
-import com.nequi.franchise.franchise.entities.Franchise;
-import com.nequi.franchise.franchise.entities.Store;
+import com.nequi.franchise.franchise.entities.franchises.Franchise;
+import com.nequi.franchise.franchise.entities.stores.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

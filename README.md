@@ -1,4 +1,4 @@
-# Franchise API
+# 📦 Franchise API
 
 Proyecto desarrollado con **Spring Boot 3.5.5** como prueba técnica.  
 La API expone endpoints para la gestión de franquicias, sucursales y productos.
@@ -44,11 +44,43 @@ mvn clean install
 
 mvn spring-boot:run
 
-### Por defecto, la API se levanta en: http://localhost:8080/franchise-api/v1
-
 ---
 ## 📖 Documentación Swagger
 
 Una vez levantada la aplicación, puedes acceder a la documentación generada automáticamente con Swagger UI en:
 
 👉 http://localhost:8080/swagger-ui/index.html
+
+---
+## 🐳 Ejecutar con Docker
+
+### 1. Construir la imagen
+   docker build -t franchise-api .
+
+### 2. Ejecutar el contenedor
+   docker run -d -p 8080:8080 --name franchise-api franchise-api
+
+### 3. Verificar que esté corriendo
+   docker ps
+
+## 🧰 Administración del contenedor
+
+### Detener el contenedor:
+
+docker stop franchise-api
+
+### Eliminar el contenedor:
+
+docker rm franchise-api
+
+### Reconstruir imagen y reiniciar:
+
+docker build -t franchise-api .
+docker run -d -p 8080:8080 --name franchise-api franchise-api
+
+---
+
+# 📌 Notas
+
+### Por defecto la app local expone la API en: http://localhost:8080/franchise-api/v1
+### La app desplegada esta expuesta en: http://98.81.122.11:8080/franchise-api/v1

@@ -1,7 +1,7 @@
-package com.nequi.franchise.franchise.repositories;
+package com.nequi.franchise.franchise.repositories.products;
 
-import com.nequi.franchise.franchise.entities.Product;
-import com.nequi.franchise.franchise.entities.Store;
+import com.nequi.franchise.franchise.entities.products.Product;
+import com.nequi.franchise.franchise.entities.stores.Store;
 import com.nequi.franchise.franchise.projections.TopProductStockProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

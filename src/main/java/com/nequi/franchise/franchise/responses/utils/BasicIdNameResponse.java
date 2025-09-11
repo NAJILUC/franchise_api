@@ -1,7 +1,7 @@
 package com.nequi.franchise.franchise.responses.utils;
 
 
-import com.nequi.franchise.franchise.entities.Franchise;
+import com.nequi.franchise.franchise.entities.franchises.Franchise;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
