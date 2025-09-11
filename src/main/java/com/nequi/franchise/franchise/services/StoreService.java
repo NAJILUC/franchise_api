@@ -20,15 +20,15 @@ public class StoreService {
     @Transactional
     public StoreResponse createFranchise(Franchise franchise, StoreRequest storeRequest){
         Store store = new Store();
-        this.validUniqueName(storeRequest.getName());
+        this.validUniqueName(franchise, storeRequest.getName());
         store.setFranchise(franchise);
         store.setName(storeRequest.getName());
         storeRepository.save(store);
         return new StoreResponse(store);
     }
 
-    private void validUniqueName(String name) {
-        if (storeRepository.existsByName(name)) {
+    private void validUniqueName(Franchise franchise, String name) {
+        if (storeRepository.existsByFranchiseAndName(franchise, name)) {
             throw new BadRequestException(ExceptionEnum.STOR01);
         }
     }
