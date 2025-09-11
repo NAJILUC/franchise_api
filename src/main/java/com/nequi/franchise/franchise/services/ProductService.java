@@ -35,7 +35,7 @@ public class ProductService {
     @Transactional
     public ProductResponse createProduct(Store store, ProductRequest productRequest){
         Product product = new Product();
-        this.validUniqueNameByStore(store, productRequest.getName());
+        this.validUniqueNameByStore(store, productRequest.getName(), null);
         product.setStore(store);
         product.setName(productRequest.getName());
         product.setStock(productRequest.getStock());
@@ -43,8 +43,8 @@ public class ProductService {
         return new ProductResponse(product);
     }
 
-    private void validUniqueNameByStore(Store store, String name) {
-        if (productRepository.existsByStoreAndName(store, name)) {
+    private void validUniqueNameByStore(Store store, String name, Long productId) {
+        if (productRepository.existsByStoreAndNameAndIdNot(store, name, productId)) {
             throw new BadRequestException(ExceptionEnum.PROD01);
         }
     }
@@ -60,8 +60,13 @@ public class ProductService {
     @Transactional
     public ResponseEntity<ProductResponse> updateProduct(Long productId, UpdProductRequest updProductRequest) {
         Product product = this.findByProductId(productId);
-        if (!Objects.equals(updProductRequest.getStock(), product.getStock())) {
+        if (updProductRequest.getStock() != null && !Objects.equals(updProductRequest.getStock(), product.getStock())) {
             product.setStock(updProductRequest.getStock());
+        }
+        if (updProductRequest.getName() != null && !updProductRequest.getName().isEmpty()
+                && !updProductRequest.getName().equals(product.getName())) {
+            this.validUniqueNameByStore(product.getStore(), updProductRequest.getName(), product.getId());
+            product.setName(updProductRequest.getName());
         }
         productRepository.save(product);
         ProductResponse response = new ProductResponse(product);
